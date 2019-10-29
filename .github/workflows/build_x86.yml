@@ -1,4 +1,4 @@
-name: CI
+name: Build x86
 
 on:
   release:
@@ -13,12 +13,12 @@ jobs:
     - uses: actions/checkout@v1
     - name: build arai2c.exe
       run: |
-        sudo docker build -t aria2-mingw - < Dockerfile.mingw
+        sudo docker build -t aria2-mingw - < Dockerfile.mingw_x86
         id=$(sudo docker create aria2-mingw)
-        sudo docker cp $id:/aria2/src/aria2c.exe ./aria2c-fast.exe
+        sudo docker cp $id:/aria2/src/aria2c.exe ./aria2c-fast_x86.exe
     - name: Upload to release
       uses: JasonEtco/upload-to-release@master
       with:
-        args: aria2c-fast.exe application/vnd.microsoft.portable-executable
+        args: aria2c-fast_x86.exe application/vnd.microsoft.portable-executable
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
